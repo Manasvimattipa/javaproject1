@@ -1,0 +1,62 @@
+import java.util.*;
+
+class Product {
+    int id;
+    String name;
+    int quantity;
+
+    Product(int id, String name, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+    }
+}
+
+public class InventorySystem {
+    static ArrayList<Product> list = new ArrayList<>();
+
+    public static void addProduct(int id, String name, int qty) {
+        list.add(new Product(id, name, qty));
+        System.out.println("Product Added!");
+    }
+
+    public static void updateStock(int id, int qty) {
+        for (Product p : list) {
+            if (p.id == id) {
+                p.quantity += qty;
+                System.out.println("Stock Updated!");
+                return;
+            }
+        }
+        System.out.println("Product Not Found");
+    }
+
+    public static void display() {
+        for (Product p : list) {
+            System.out.println(p.id + " " + p.name + " Qty: " + p.quantity);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n1.Add 2.Update 3.Display 4.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1:
+                    addProduct(sc.nextInt(), sc.next(), sc.nextInt());
+                    break;
+                case 2:
+                    updateStock(sc.nextInt(), sc.nextInt());
+                    break;
+                case 3:
+                    display();
+                    break;
+                case 4:
+                    System.exit(0);
+            }
+        }
+    }
+}

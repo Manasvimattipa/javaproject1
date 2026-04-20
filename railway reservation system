@@ -1,0 +1,94 @@
+import java.util.*;
+
+class Passenger {
+    String name;
+    int seatNumber;
+
+    Passenger(String name, int seatNumber) {
+        this.name = name;
+        this.seatNumber = seatNumber;
+    }
+}
+
+class Train {
+    int totalSeats = 5;
+    int availableSeats = 5;
+    ArrayList<Passenger> passengers = new ArrayList<>();
+
+    void bookTicket(String name) {
+        if (availableSeats > 0) {
+            int seatNumber = totalSeats - availableSeats + 1;
+            passengers.add(new Passenger(name, seatNumber));
+            availableSeats--;
+            System.out.println("Ticket Booked! Seat No: " + seatNumber);
+        } else {
+            System.out.println("No seats available!");
+        }
+    }
+
+    void cancelTicket(int seatNumber) {
+        Iterator<Passenger> it = passengers.iterator();
+        while (it.hasNext()) {
+            Passenger p = it.next();
+            if (p.seatNumber == seatNumber) {
+                it.remove();
+                availableSeats++;
+                System.out.println("Ticket Cancelled!");
+                return;
+            }
+        }
+        System.out.println("Seat not found!");
+    }
+
+    void displayPassengers() {
+        if (passengers.isEmpty()) {
+            System.out.println("No bookings yet.");
+            return;
+        }
+
+        for (Passenger p : passengers) {
+            System.out.println("Name: " + p.name + " | Seat: " + p.seatNumber);
+        }
+    }
+}
+
+public class RailwaySystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Train train = new Train();
+
+        while (true) {
+            System.out.println("\n1. Book Ticket");
+            System.out.println("2. Cancel Ticket");
+            System.out.println("3. View Passengers");
+            System.out.println("4. Exit");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    train.bookTicket(name);
+                    break;
+
+                case 2:
+                    System.out.print("Enter Seat Number: ");
+                    int seat = sc.nextInt();
+                    train.cancelTicket(seat);
+                    break;
+
+                case 3:
+                    train.displayPassengers();
+                    break;
+
+                case 4:
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+public class StudentSystem {
+    static ArrayList<Student> students = new ArrayList<>();
+
+    static void add(int id, String name) {
+        students.add(new Student(id, name));
+        System.out.println("Student Added");
+    }
+
+    static void display() {
+        for (Student s : students) {
+            System.out.println(s.id + " " + s.name);
+        }
+    }
+
+    static void search(int id) {
+        for (Student s : students) {
+            if (s.id == id) {
+                System.out.println("Found: " + s.name);
+                return;
+            }
+        }
+        System.out.println("Not Found");
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n1.Add 2.Display 3.Search 4.Exit");
+            int ch = sc.nextInt();
+
+            switch (ch) {
+                case 1:
+                    add(sc.nextInt(), sc.next());
+                    break;
+                case 2:
+                    display();
+                    break;
+                case 3:
+                    search(sc.nextInt());
+                    break;
+                case 4:
+                    System.exit(0);
+            }
+        }
+    }
+}
